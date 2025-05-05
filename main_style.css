@@ -107,7 +107,23 @@ body {
 
 .hero-image img {
     max-width: 350px;
+    border-radius: 0;
+    display: block;
+
+    mask-image: linear-gradient(to top,
+    transparent 0%,
+    black 30%),
+    linear-gradient(to right,
+            transparent 0%,
+            black 15%,
+            black 85%,
+            transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-composite: destination-in;
+
+    image-rendering: auto;
 }
+
 
 .socials {
     position: fixed;
