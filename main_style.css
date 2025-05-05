@@ -122,6 +122,8 @@ body {
     -webkit-mask-composite: destination-in;
 
     image-rendering: auto;
+    width: 100%;
+    height: auto;
 }
 
 
