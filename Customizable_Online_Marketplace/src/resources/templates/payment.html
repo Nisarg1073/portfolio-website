@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+  </div>
+</div>
+
+<!-- Payment Form Container -->
+<div class="payment-container">
+  <h1>Payment Information</h1>
+  <form action="/processPayment" method="post">
+    <!-- Card Details -->
+    <div class="form-group">
+      <label for="cardHolder">Cardholder Name</label>
+      <input type="text" id="cardHolder" name="cardHolder" placeholder="Name on Card" required>
+    </div>
+    <div class="form-group">
+      <label for="cardNumber">Card Number</label>
+      <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group half">
+        <label for="expiryMonth">Expiry Month</label>
+        <select id="expiryMonth" name="expiryMonth" required>
+          <option value="">Month</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+      <div class="form-group half">
+        <label for="expiryYear">Expiry Year</label>
+        <select id="expiryYear" name="expiryYear" required>
+          <option value="">Year</option>
+          <!-- List current year through next 10 years (example: 2025-2034) -->
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+          <option value="2030">2030</option>
+          <option value="2031">2031</option>
+          <option value="2032">2032</option>
+          <option value="2033">2033</option>
+          <option value="2034">2034</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" name="cvv" placeholder="CVV" required>
+    </div>
+
+    <hr>
+
+    <h2>Billing Address</h2>
+    <div class="form-group">
+      <label for="billingAddress">Street Address</label>
+      <input type="text" id="billingAddress" name="billingAddress" placeholder="Street Address" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group half">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" placeholder="City" required>
+      </div>
+      <div class="form-group half">
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" placeholder="State" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group half">
+        <label for="zip">ZIP Code</label>
+        <input type="text" id="zip" name="zip" placeholder="ZIP Code" required>
+      </div>
+      <div class="form-group half">
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" placeholder="Country" required>
+      </div>
+    </div>
+
+    <form action="/order-history" method="get">
+      <button type="submit">Pay Now</button>
+    </form>
+  </form>
+</div>
+
+<script src="/js/homepage.js"></script>
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+  <div class="chat-modal-content">
+    <button id="closeChat">&times;</button>
+    <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+            allow="microphone; autoplay"></iframe>
+  </div>
+</div>
+<script src="/js/homepage.js"></script>
+<script>
+  const chatBtn = document.getElementById('chatBtn');
+  const chatModal = document.getElementById('chatModal');
+  const closeChat = document.getElementById('closeChat');
+  chatBtn.addEventListener('click', () => {
+    chatModal.style.display = 'flex';
+  });
+  closeChat.addEventListener('click', () => {
+    chatModal.style.display = 'none';
+  });
+  chatModal.addEventListener('click', (e) => {
+    if (e.target === chatModal) {
+      chatModal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

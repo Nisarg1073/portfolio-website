@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Custom Marketplace</title>
+    <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<div class="top-bar">
+    <a href="/homepage" class="logo">Custom Marketplace</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products...">
+        <button>🔍</button>
+    </div>
+    <div class="top-right">
+        <a href="/cart" class="cart-container">🛒 Cart</a>
+        <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+           th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+        <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+    </div>
+</div>
+<div class="content" style="padding: 40px;">
+    <h1>Contact Us</h1>
+    <p>If you have any questions, concerns, or feedback, please reach out using the form below.</p>
+    <form action="/contact" method="post">
+        <div>
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required/>
+        </div>
+        <div>
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required/>
+        </div>
+        <div>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+<footer style="padding: 20px; text-align: center;">
+    <p>&copy; 2025 Custom Marketplace. All rights reserved.</p>
+</footer>
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+    <div class="chat-modal-content">
+        <button id="closeChat">&times;</button>
+        <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+                allow="microphone; autoplay"></iframe>
+    </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<script>
+    const chatBtn = document.getElementById('chatBtn');
+    const chatModal = document.getElementById('chatModal');
+    const closeChat = document.getElementById('closeChat');
+    chatBtn.addEventListener('click', () => {
+        chatModal.style.display = 'flex';
+    });
+    closeChat.addEventListener('click', () => {
+        chatModal.style.display = 'none';
+    });
+    chatModal.addEventListener('click', (e) => {
+        if (e.target === chatModal) {
+            chatModal.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

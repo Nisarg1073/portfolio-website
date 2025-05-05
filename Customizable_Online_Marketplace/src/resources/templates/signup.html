@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+
+<div class="signup-container">
+  <div class="logo" style="text-align: center; font-size: 26px; margin-bottom: 20px;">Custom Marketplace</div>
+  <h2 style="text-align: center; margin-bottom: 20px;">Create an Account</h2>
+
+  <!-- Display general error message if present -->
+  <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}" style="text-align: center; margin-bottom: 15px;"></div>
+
+  <form action="/auth/signup" method="post" th:object="${user}">
+    <div class="horizontal-container">
+      <!-- Left Column -->
+      <div class="left-column">
+        <fieldset class="form-section">
+          <legend>Personal Information</legend>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name" required>
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name" required>
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+          </div>
+        </fieldset>
+        <fieldset class="form-section">
+          <legend>Account Credentials</legend>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" th:field="*{username}" id="username" placeholder="Username" required>
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" th:field="*{email}" id="email" placeholder="Email" required>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" th:field="*{password}" id="password" placeholder="Password" required>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+          </div>
+          <!-- New Role Dropdown -->
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select th:field="*{role}" id="role" required>
+              <option value="">--Select Role--</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="MANAGER">MANAGER</option>
+              <option value="ASSOCIATE">ASSOCIATE</option>
+              <option value="VENDOR">VENDOR</option>
+            </select>
+            <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <fieldset class="form-section">
+          <legend>Contact Information</legend>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Phone Number" required>
+            <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+          </div>
+        </fieldset>
+        <fieldset class="form-section">
+          <legend>Address Details</legend>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" th:field="*{address}" id="address" placeholder="Address" required>
+            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" th:field="*{city}" id="city" placeholder="City" required>
+            <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+          </div>
+          <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" th:field="*{state}" id="state" placeholder="State" required>
+            <span th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
+          </div>
+          <div class="form-group">
+            <label for="zipCode">ZIP Code</label>
+            <input type="text" th:field="*{zipCode}" id="zipCode" placeholder="ZIP Code" required>
+            <span th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></span>
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" th:field="*{country}" id="country" placeholder="Country" required>
+            <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- Extra fields for roles -->
+    <div id="adminFields" class="role-extra-fields" style="display: none; margin-bottom: 15px;">
+      <!-- Placeholder for additional ADMIN fields -->
+      <p>Additional ADMIN options will appear here.</p>
+    </div>
+    <div id="managerFields" class="role-extra-fields" style="display: none; margin-bottom: 15px;">
+      <!-- Placeholder for additional MANAGER fields -->
+      <p>Additional MANAGER options will appear here.</p>
+    </div>
+    <div id="associateFields" class="role-extra-fields" style="display: none; margin-bottom: 15px;">
+      <!-- Placeholder for additional ASSOCIATE fields -->
+      <p>Additional ASSOCIATE options will appear here.</p>
+    </div>
+    <div id="vendorFields" class="role-extra-fields" style="display: none; margin-bottom: 15px;">
+      <!-- Placeholder for additional VENDOR fields -->
+      <p>Additional VENDOR options will appear here.</p>
+    </div>
+
+    <div class="form-group" style="text-align: center;">
+      <button type="submit">Sign Up</button>
+    </div>
+  </form>
+
+  <div class="signin-link" style="text-align: center;">
+    Already have an account? <a href="/login">Sign in</a>
+  </div>
+</div>
+
+<!-- JavaScript to show/hide extra role fields -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var roleSelect = document.getElementById('role');
+    var adminFields = document.getElementById('adminFields');
+    var managerFields = document.getElementById('managerFields');
+    var associateFields = document.getElementById('associateFields');
+    var vendorFields = document.getElementById('vendorFields');
+
+    roleSelect.addEventListener('change', function() {
+      // Hide all extra fields first
+      adminFields.style.display = 'none';
+      managerFields.style.display = 'none';
+      associateFields.style.display = 'none';
+      vendorFields.style.display = 'none';
+
+      // Show the fields based on the selected role
+      if (this.value === 'ADMIN') {
+        adminFields.style.display = 'block';
+      } else if (this.value === 'MANAGER') {
+        managerFields.style.display = 'block';
+      } else if (this.value === 'ASSOCIATE') {
+        associateFields.style.display = 'block';
+      } else if (this.value === 'VENDOR') {
+        vendorFields.style.display = 'block';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

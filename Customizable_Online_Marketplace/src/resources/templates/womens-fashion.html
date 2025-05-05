@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Women's Fashion - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+  </div>
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="categories-container">
+    <div class="categories" id="categories"></div>
+  </div>
+  <a href="#">Returns & Orders</a>
+</div>
+
+<!-- Women's Fashion Section -->
+<div class="best-sellers-container" th:if="${products != null}">
+  <div class="card" th:each="product : ${products}">
+    <img th:src="${product.productImageUrl}" alt="Product Image">
+    <div class="card-info">
+      <h3 th:text="${product.productName}">Product Name</h3>
+      <p th:text="'Price: $' + ${product.price}">Price</p>
+      <p th:text="${product.description}">Description</p>
+
+      <!-- Add to Cart Button -->
+      <form th:action="@{/cart/add}" method="post">
+        <input type="hidden" name="productId" th:value="${product.id}" />
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div th:if="${products == null || #lists.isEmpty(products)}">
+  <p>No women's fashion products found.</p>
+</div>
+
+<script src="/js/homepage.js"></script>
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+  <div class="chat-modal-content">
+    <button id="closeChat">&times;</button>
+    <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+            allow="microphone; autoplay"></iframe>
+  </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<script>
+  const chatBtn = document.getElementById('chatBtn');
+  const chatModal = document.getElementById('chatModal');
+  const closeChat = document.getElementById('closeChat');
+  chatBtn.addEventListener('click', () => {
+    chatModal.style.display = 'flex';
+  });
+  closeChat.addEventListener('click', () => {
+    chatModal.style.display = 'none';
+  });
+  chatModal.addEventListener('click', (e) => {
+    if (e.target === chatModal) {
+      chatModal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>About - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+  </div>
+</div>
+<div class="content" style="padding: 40px;">
+  <h1>About Us</h1>
+  <p>Welcome to Custom Marketplace, your number one source for all things fashion, beauty, and home essentials. We are dedicated to giving you the very best products, with a focus on quality, reliability, and customer satisfaction.</p>
+  <p>Founded in 2025, Custom Marketplace has grown from humble beginnings to serving customers worldwide. We are passionate about providing exceptional products and outstanding customer service.</p>
+  <p>If you have any questions or comments, please feel free to reach out through our contact page.</p>
+</div>
+<footer style="padding: 20px; text-align: center;">
+  <p>&copy; 2025 Custom Marketplace. All rights reserved.</p>
+</footer>
+</body>
+</html>

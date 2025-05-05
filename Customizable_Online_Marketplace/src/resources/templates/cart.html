@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="/homepage" class="logo">Custom Marketplace</a>
+    <div class="search-container">
+        <input type="text" placeholder="Search products...">
+        <button>🔍</button>
+    </div>
+    <div class="top-right">
+        <a href="/cart" class="cart-container">🛒 Cart</a>
+        <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+           th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+        <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+    </div>
+</div>
+
+<div class="bottom-bar">
+    <div class="categories" id="categories"></div>
+    <a href="#">Returns & Orders</a>
+</div>
+
+<div class="cart-page">
+    <h1>Your Shopping Cart</h1>
+
+    <div th:if="${success}" class="flash-message success" th:text="${success}"></div>
+    <div th:if="${error}" class="flash-message error" th:text="${error}"></div>
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <p>Your cart is empty.</p>
+    </div>
+    <div class="cart-items" th:if="${not #lists.isEmpty(cartItems)}">
+        <div class="cart-item" th:each="item : ${cartItems}">
+            <div class="cart-product-info">
+                <div class="cart-product-image">
+                    <img th:src="${item.product.productImageUrl}" alt="Product Image"/>
+                </div>
+                <span class="cart-product-name" th:text="${item.product.productName}">Product Name</span>
+            </div>
+            <div class="cart-product-price"
+                 th:text="'$' + ${#numbers.formatDecimal(item.product.price, 2, 2)}">$0.00
+            </div>
+            <div class="cart-product-quantity">
+                <form th:action="@{/cart/update}" method="post">
+                    <input type="hidden" name="cartItemId" th:value="${item.id}"/>
+                    <input type="number" name="quantity" th:value="${item.quantity}" min="1"/>
+                    <button type="submit" class="update-button">Update</button>
+                </form>
+            </div>
+            <div class="cart-product-subtotal"
+                 th:text="'$' + ${#numbers.formatDecimal(item.product.price * item.quantity, 2, 2)}">
+                $0.00
+            </div>
+            <div class="cart-product-actions">
+                <form th:action="@{/cart/remove}" method="post">
+                    <input type="hidden" name="cartItemId" th:value="${item.id}"/>
+                    <button type="submit" class="remove-button">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-total" th:if="${not #lists.isEmpty(cartItems)}">
+        <p>
+            Total:
+            <span th:text="'$' + ${#numbers.formatDecimal(total, 2, 2)}">0.00</span>
+        </p>
+        <button onclick="window.location.href='/checkout'">Proceed to Checkout</button>
+    </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+    <div class="chat-modal-content">
+        <button id="closeChat">&times;</button>
+        <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+                allow="microphone; autoplay"></iframe>
+    </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<script>
+    const chatBtn = document.getElementById('chatBtn');
+    const chatModal = document.getElementById('chatModal');
+    const closeChat = document.getElementById('closeChat');
+    chatBtn.addEventListener('click', () => {
+        chatModal.style.display = 'flex';
+    });
+    closeChat.addEventListener('click', () => {
+        chatModal.style.display = 'none';
+    });
+    chatModal.addEventListener('click', (e) => {
+        if (e.target === chatModal) {
+            chatModal.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

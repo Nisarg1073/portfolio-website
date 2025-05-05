@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Marketplace Homepage</title>
+  <!-- Your main stylesheet -->
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+  <!-- Chatbot-specific CSS -->
+  <link rel="stylesheet" href="/css/chatbot.css">
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+  </div>
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="categories-container">
+    <div class="categories" id="categories"></div>
+  </div>
+  <a href="#">Returns & Orders</a>
+</div>
+
+<!-- Main Content (Homepage Sections) -->
+<div class="homepage-sections">
+  <div class="section">
+    <h3>BEST SELLERS</h3>
+    <a href="/products/best-sellers?sellerName=Best%20Seller&minRating=4.5">
+      <img src="https://static.vecteezy.com/system/resources/previews/000/189/130/original/best-seller-golden-label-badge-vector-design.jpg"
+           alt="TOP SELLERS">
+    </a>
+    <p>Explore the best-selling products of 2025.</p>
+  </div>
+  <div class="section">
+    <h3>Customers' most-loved</h3>
+    <div class="grid">
+      <div>
+        <a href="/products/womens-fashion">
+          <img src="https://static.vecteezy.com/system/resources/previews/014/290/065/non_2x/women-s-fashion-logo-design-free-vector.jpg"
+               alt="Women's fashion">
+        </a>
+        <p>Women’s fashion picks.</p>
+      </div>
+      <div>
+        <a href="/products/mens-fashion">
+          <img src="https://static.vecteezy.com/system/resources/previews/002/186/686/non_2x/bearded-man-face-free-vector.jpg"
+               alt="Men's fashion">
+        </a>
+        <p>Men’s fashion.</p>
+      </div>
+      <div>
+        <a href="/products/top-beauty-products">
+          <img src="https://static.vecteezy.com/system/resources/previews/005/003/617/non_2x/beautiful-queen-women-natural-logo-template-premium-vector.jpg"
+               alt="Beauty">
+        </a>
+        <p>Top-rated beauty product.</p>
+      </div>
+      <div>
+        <a href="/products/home-essentials">
+          <img src="https://static.vecteezy.com/system/resources/previews/008/123/821/non_2x/real-estate-logo-house-logo-home-logo-sign-symbol-free-vector.jpg"
+               alt="Home">
+        </a>
+        <p>Home essentials.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h3>Best Products in Outlet</h3>
+    <a href="/products/top-rated">
+      <img src="https://static.vecteezy.com/system/resources/previews/032/312/994/non_2x/best-product-seller-black-and-golden-label-design-free-vector.jpg"
+           alt="Best Sellers">
+    </a>
+    <p>Top-rated outlet products.</p>
+  </div>
+</div>
+
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+  <div class="chat-modal-content">
+    <button id="closeChat">&times;</button>
+    <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+            allow="microphone; autoplay"></iframe>
+  </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<script>
+  const chatBtn = document.getElementById('chatBtn');
+  const chatModal = document.getElementById('chatModal');
+  const closeChat = document.getElementById('closeChat');
+  chatBtn.addEventListener('click', () => {
+    chatModal.style.display = 'flex';
+  });
+  closeChat.addEventListener('click', () => {
+    chatModal.style.display = 'none';
+  });
+  chatModal.addEventListener('click', (e) => {
+    if (e.target === chatModal) {
+      chatModal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

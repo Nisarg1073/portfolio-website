@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+  </div>
+</div>
+<div class="order-confirmation" style="padding: 40px; max-width: 800px; margin: 0 auto; text-align: center;">
+  <h1>Order Confirmation</h1>
+  <p>Thank you for your order!</p>
+  <p>Your order ID is: <span th:text="${order.id}"></span></p>
+  <p>Total: $<span th:text="${#numbers.formatDecimal(order.total, 2, 2)}"></span></p>
+  <a th:href="@{'/invoice/' + ${order.id}}" class="invoice-link">Download Invoice</a>
+  <br/><br/>
+  <a href="/homepage" class="return-home">Return to Homepage</a>
+</div>
+</body>
+</html>

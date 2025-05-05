@@ -1,4 +1,4 @@
-/* === Homepage Portfolio CSS === */
+/* === Homepage & Projects Portfolio CSS === */
 
 body {
     margin: 0;
@@ -106,26 +106,19 @@ body {
 }
 
 .hero-image img {
-    max-width: 450px;
+    max-width: 350px;
     border-radius: 0;
     display: block;
 
-    mask-image: linear-gradient(to top,
-    transparent 0%,
-    black 30%),
-    linear-gradient(to right,
-            transparent 0%,
-            black 15%,
-            black 85%,
-            transparent 100%);
+    /* Fade edges: left, right, bottom */
+    mask-image: linear-gradient(to top, transparent 0%, black 30%),
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     mask-composite: intersect;
     -webkit-mask-composite: destination-in;
 
-    image-rendering: auto;
     width: 100%;
     height: auto;
 }
-
 
 .socials {
     position: fixed;
@@ -145,4 +138,45 @@ body {
 
 .socials a img:hover {
     transform: scale(1.2);
+}
+
+/* === Projects Page Styles === */
+
+.projects-page .section-title {
+    text-align: center;
+    margin: 60px 0 40px;
+    font-size: 2.5rem;
+    color: #a259ff;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.project-card {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid rgba(162, 89, 255, 0.6);
+    box-shadow: 0 0 10px rgba(162, 89, 255, 0.6);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(162, 89, 255, 0.8);
+}
+
+.project-links {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.project-links .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
 }

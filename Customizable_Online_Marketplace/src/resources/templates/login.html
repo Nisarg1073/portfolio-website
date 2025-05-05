@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<div class="login-container">
+  <div class="logo" style="text-align: center; font-size: 26px; margin-bottom: 20px;">Custom Marketplace</div>
+  <h2>Sign In</h2>
+  <!-- Display error message if login fails -->
+  <div th:if="${error}" class="error-message" th:text="${error}"></div>
+  <form action="/login" method="post">
+    <div>
+      <input type="text" name="usernameOrEmail" placeholder="Username or Email" required>
+    </div>
+    <div>
+      <input type="password" name="password" placeholder="Password" required>
+    </div>
+    <div style="text-align: center;">
+      <button type="submit">Sign In</button>
+    </div>
+  </form>
+  <div class="signup-link" style="text-align: center;">
+    New to Custom Marketplace? <a href="/auth/create-account">Create an account</a>
+  </div>
+</div>
+</body>
+</html>

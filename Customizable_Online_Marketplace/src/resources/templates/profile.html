@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile - Custom Marketplace</title>
+  <link rel="stylesheet" href="/css/main-stylesheet.css">
+</head>
+<body>
+<!-- Top Bar -->
+<div class="top-bar">
+  <a href="/homepage" class="logo">Custom Marketplace</a>
+  <div class="search-container">
+    <input type="text" placeholder="Search products...">
+    <button>🔍</button>
+  </div>
+  <div class="top-right">
+    <a href="/cart" class="cart-container">🛒 Cart</a>
+    <a th:if="${session.currentUser == null}" href="/login" class="auth-link">Sign In / Sign Up</a>
+    <a th:if="${session.currentUser != null}" href="/profile" class="username-display"
+       th:text="'Hello, ' + ${session.currentUser.username}">Username</a>
+  </div>
+</div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="categories" id="categories"></div>
+  <a href="#">Returns & Orders</a>
+</div>
+
+<!-- Profile Container (Centered) -->
+<div class="profile-container">
+  <div class="profile-card">
+    <h1>Your Profile</h1>
+    <div class="profile-info">
+      <p>First Name: <span th:text="${user.firstName}"></span></p>
+      <p>Last Name: <span th:text="${user.lastName}"></span></p>
+      <p>Email: <span th:text="${user.email}"></span></p>
+      <p>Phone: <span th:text="${user.phoneNumber}"></span></p>
+      <p>Address: <span th:text="${user.address}"></span></p>
+      <p>City: <span th:text="${user.city}"></span></p>
+      <p>State: <span th:text="${user.state}"></span></p>
+      <p>ZIP Code: <span th:text="${user.zipCode}"></span></p>
+      <p>Country: <span th:text="${user.country}"></span></p>
+    </div>
+    <a href="/order-history" class="profile-btn">View Order History</a>
+  </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+
+<button id="chatBtn">Chat with us</button>
+<div id="chatModal">
+  <div class="chat-modal-content">
+    <button id="closeChat">&times;</button>
+    <iframe src="https://www.chatbase.co/chatbot-iframe/wKXB7rKtWj86oIztebJxy"
+            allow="microphone; autoplay"></iframe>
+  </div>
+</div>
+
+<script src="/js/homepage.js"></script>
+<script>
+  const chatBtn = document.getElementById('chatBtn');
+  const chatModal = document.getElementById('chatModal');
+  const closeChat = document.getElementById('closeChat');
+  chatBtn.addEventListener('click', () => {
+    chatModal.style.display = 'flex';
+  });
+  closeChat.addEventListener('click', () => {
+    chatModal.style.display = 'none';
+  });
+  chatModal.addEventListener('click', (e) => {
+    if (e.target === chatModal) {
+      chatModal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
