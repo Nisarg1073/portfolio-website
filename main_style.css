@@ -138,7 +138,6 @@ body {
 .socials a img {
     width: 24px;
     height: 24px;
-    filter: invert(1);
     transition: transform 0.3s;
 }
 
